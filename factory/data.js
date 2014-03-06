@@ -31,7 +31,52 @@ module.exports = function($rootScope)
 
 	return function(key, value, persist)
 	{
-		var current  = angular.fromJson(flashStorage[key] || sessionStorage[key] || localStorage[key])
+		var shorthand = function()
+		{
+			return {store:value, result:value}
+		}
+		// If both are arrays concatenate rather than replace avoiding needlessly complicated code:
+		// var alerts = data.sess('alerts); alerts.push({new:alert}); data.sess('alerts', alerts)
+		// instead we can do this all in one command with data.sess('alerts[]', {new:alert})
+		if ('[]' == key.slice(-2))
+		{
+			key = key.slice(0, -2)
+
+			shorthand = function(current)
+			{
+				return {store:current.concat(value), result:value}
+			}
+		}
+
+		var prop = key.split('.')
+
+		if (2 == prop.length)
+		{
+			key = prop[0]
+
+			shorthand = function(current)
+			{
+				current[prop[1]] = value
+
+				return {store:current, result:value}
+			}
+		}
+
+		if ('+' == key.slice(-1) || '-' == key.slice(-1))
+		{
+			key = key.slice(0, -1)
+
+			shorthand = function(current)
+			{
+				value *= '-' == key.slice(-1) ? -1 : 1
+
+				value = (current || 0) + value
+
+				return {store:value, result:value}
+			}
+		}
+
+		var current = ng.fromJson(flashStorage[key] || sessionStorage[key] || localStorage[key])
 
 		if (1 == arguments.length)
 		{
@@ -50,22 +95,19 @@ module.exports = function($rootScope)
 			storage = localStorage
 		}
 
-		// If both are arrays concatenate rather than replace avoiding needlessly complicated code:
-		// var alerts = data.sess('alerts); alerts.push({new:alert}); data.sess('alerts', alerts)
-		// instead we can do this all in one command with data.sess('alerts[]', {new:alert})
-		if (key.slice && '[]' == key.slice(-2))
+		value = shorthand(current)
+
+		if (value.store === null || value.store === undefined)
 		{
-			key = key.slice(0, -2)
-
-			current.push(value)
-
-			value = current
+			delete storage[key]
+		}
+		else
+		{
+			storage[key] = ng.toJson(value.store)
 		}
 
-		storage[key] = angular.toJson(value)
+		persist && ng.isDefined(saveFile) && saveFile(storage)
 
-		persist && angular.isDefined(saveFile) && saveFile(storage)
-
-		return value
+		return value.result
 	}
 }

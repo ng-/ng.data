@@ -1,6 +1,7 @@
 {
-   "name": "data",
+   "name": "ng.data",
    "description": "simple data storage",
+	"version": "0.0.1-experimental1",
    "author": {
       "name": "Adam Kircher"
    },
