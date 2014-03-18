@@ -37,32 +37,76 @@ If persist is undefined, data is persisted in memory only.  On the client this i
 If persist is falsey (but not undefined), data is stored as flash data.  It will be available on the next location path change and then will be erased (this is great for alert messages)
 
 ## Shorthand
-Sometimes getters/setters can be annoying if you only want to manipulate data.
+Sometimes getters/setters can be annoying if you only want to manipulate data. ng.data has shorthand for these common manipulations
+
+####incrementing
+verbose
 ```javascript
 module('example').controller('ctrl', function(data)
 {
-  //needlessly verbose incrementing
   var count = data('count')
 
   count += 5
 
   data('count', count)
+})
+```
 
-  //needlessly verbose decrementing
+shorthand
+```javascript
+module('example').controller('ctrl', function(data)
+{
+  data('count+', 5)
+})
+```
+
+####decrementing
+verbose
+```javascript
+module('example').controller('ctrl', function(data)
+{
   var count = data('count')
 
   count -= 5
 
   data('count', count)
+})
+```
+shorthand
+```javascript
+module('example').controller('ctrl', function(data)
+{
+  data('count-', 5)
+})
+```
 
-  //needlessly verbose push
+#### pushing
+verbose
+```javascript
+module('example').controller('ctrl', function(data)
+{
   var arr = data('arr')
 
   arr.push('Hello!')
 
   data('arr', arr)
+})
+```
 
-  //needlessly verbose property
+shorthand
+*note: this only works if arr is already an array*
+```javascript
+module('example').controller('ctrl', function(data)
+{
+  data('arr[]', 'Hello!')
+})
+```
+
+####property
+verbose
+```javascript
+module('example').controller('ctrl', function(data)
+{
   var obj = data('obj')
 
   obj.prop = 'Hello!'
@@ -71,24 +115,14 @@ module('example').controller('ctrl', function(data)
 })
 ```
 
-ng.data has shorthand for these common manipulations
+shorthand
+*note: this only works if obj is already an object*
 ```javascript
 module('example').controller('ctrl', function(data)
 {
-  //incrementing shorthand
-  data('count+', 5)
-
-  //decrementing shorthand
-  data('count-', 5)
-
-  //push shorthand, note: this only works if arr is already an array
-  data('arr[]', 'Hello!')
-
-  //property shorthand, note: this only works if obj is already an object
   data('obj.prop', 'Hello!')
 })
 ```
-
 
 ## changelog
 #### 0.0.0-rc1
