@@ -1,4 +1,4 @@
-# ng.data: getter/setter for data persistence
+# ng.data: data persistence getter/setter
 ng.data aims to make it dead simple to persist data
 
 ## API
