@@ -1,4 +1,4 @@
-# ng.data: simple getter/setter for data persistence
+# ng.data: getter/setter for data persistence
 ng.data aims to make it dead simple to persist data
 
 ## API
@@ -80,7 +80,7 @@ module('example').controller('ctrl', function(data)
 })
 ```
 
-#### pushing
+#### pushing values
 verbose
 ```javascript
 module('example').controller('ctrl', function(data)
@@ -102,7 +102,7 @@ module('example').controller('ctrl', function(data)
 })
 ```
 
-####property
+#### adding properties
 verbose
 ```javascript
 module('example').controller('ctrl', function(data)
@@ -129,11 +129,7 @@ module('example').controller('ctrl', function(data)
 - Initial commit
 
 ## todos
-- Environment based Config
-- Documentation: explain Global ng Var
-- Duplication detection before overwrite
-- Use fs.watch to do automatic reloads
-- Use the cluster module to run multi-thread
+- ???
 
 ## related projects
 - [ng](https://github.com/ng-/ng): angular reimagined
