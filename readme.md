@@ -1,7 +1,7 @@
 # ng.data: data persistence getter/setter
 ng.data aims to make it dead simple to persist data
 
-## API
+## api
 ng.data has a very simple API
 ```javascript
 ng.data = function(key, value, persist)
@@ -10,7 +10,7 @@ ng.data = function(key, value, persist)
 }
 ```
 
-## Get/Set
+## get/set
 ng.data is just a getter/setter
 ```javascript
 module('example').controller('ctrl', function(data)
@@ -28,7 +28,7 @@ module('example').controller('ctrl', function(data)
 })
 ```
 
-## Persistance
+## persistance
 
 If persist is truthy, data is persisted until deleted. On the client this is done with localStorage, on the server this is done with a JSON object.
 
@@ -36,7 +36,7 @@ If persist is undefined, data is persisted in memory only.  On the client this i
 
 If persist is falsey (but not undefined), data is stored as flash data.  It will be available on the next location path change and then will be erased (this is great for alert messages)
 
-## Shorthand
+## shorthand
 Sometimes getters/setters can be annoying if you only want to manipulate data. ng.data has shorthand for these common manipulations
 
 ####incrementing
